@@ -1,25 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Items from "./Items";
+import AddAlarmIcon from '@mui/icons-material/AddAlarm';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () =>{
+
+    const [TaskName , TaskChanger] = useState("");
+    const [ListArr , ChangeList] = useState([]);
+
+    const valueChanged = (event) =>{
+        TaskChanger(() =>{
+        return event.target.value
+
+            })
+        }
+
+
+    const change = () => {
+        ChangeList((old) => {
+            return(
+                [...old , TaskName]
+            )
+            
+        })
+        TaskChanger("");
+    }
+
+
+
+    return (
+        <>
+            <div className="parent">
+                <div className="container">
+                    <h1 className="head">Daily Tasks</h1>
+                    <input className="input" type="text" onChange={valueChanged} value ={TaskName} placeholder="Add Tasks to The List"/>
+                    <span  className="add" onClick={change} ><AddAlarmIcon className="addIcon"/></span>
+                    <ul>
+                            {ListArr.map((val , index) =>{
+                                return (
+                                    <Items 
+                                        key = {index}
+                                        item = {val}
+                                    />
+                                )
+                            })}     
+                    </ul>
+                </div>
+            </div>
+        </>
+    )
+    
+
 }
+
 
 export default App;
